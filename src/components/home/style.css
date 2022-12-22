@@ -1,0 +1,16 @@
+.home {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.card {
+
+    border: solid 2px black;
+    text-align: center;
+    margin-top: 1vh;
+}
+
+.card .title {
+    background-color: mistyrose;
+}
