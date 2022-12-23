@@ -4,15 +4,17 @@ import './style.css'
 
 function Game() {
     const { game } = useParams()
+    const [name, getName] = useState('')
     const [description, getDescription] = useState('')
     const [url, getURL] = useState('')
     useEffect(() => {
         const fetchData = async () => {
             const data = await fetch('https://vgdb.herokuapp.com/api/' + game)
             const json = await data.json()
+            let gameName = json.name
             let gameDes = json.description
             let gameUrl = json.imgUrl
-
+            getName(gameName)
             getDescription(gameDes)
             getURL(gameUrl)
         }
@@ -20,9 +22,9 @@ function Game() {
     })
     return (
         <div className="gamePage">
-            <img src={url} alt={game} />
+            <img src={url} alt={name} />
             <h1>
-                {game.split('_').join(' ')}
+                {name}
             </h1>
             <div className="gameDescription">
                 {description}
