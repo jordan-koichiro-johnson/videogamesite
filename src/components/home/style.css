@@ -2,15 +2,19 @@
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
+    align-items: center;
 }
 
 .card {
-
-    border: solid 2px black;
     text-align: center;
     margin-top: 1vh;
+    height: fit-content;
 }
 
 .card .title {
     background-color: mistyrose;
+}
+
+.card img {
+    width: 10vw;
 }
