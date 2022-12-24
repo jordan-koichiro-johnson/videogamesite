@@ -5,11 +5,13 @@ import Navbar from './components/navbar';
 import Home from './components/home'
 import Game from './components/game'
 import Login from './components/login'
+import Profile from './components/profile'
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [token, setToken] = useState("");
-  const [username, setUserId] = useState(0);
+  const [userId, setUserId] = useState(0);
+  const [username, setUsername] = useState(0);
   const [user, setUser] = useState('')
   const [pass, setPass] = useState('')
 
@@ -30,9 +32,10 @@ function App() {
           if (data) {
 
             setToken(storeToken)
-
+            console.log(data.user)
             setIsLoggedIn(true)
-            setUserId(data.user.username)
+            setUsername(data.user.username)
+            setUserId(data.user.id)
 
           } else {
             localStorage.removeItem("token")
@@ -52,7 +55,8 @@ function App() {
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/:game' element={<Game />} />
-          <Route path='/login' element={<Login user={user} setUser={setUser} pass={pass} setPass={setPass} token={token} setToken={setToken} userId={username} setUserId={setUserId} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
+          <Route path='/login' element={<Login user={user} setUser={setUser} pass={pass} setPass={setPass} token={token} setToken={setToken} username={username} setUserId={setUserId} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
+          <Route path='/profile' element={<Profile username={username} userId={userId} />} />
         </Routes>
 
       </Router>

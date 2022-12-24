@@ -10,24 +10,6 @@ function Navbar({ isLoggedIn, username }) {
         setSearch('/' + value)
     }
 
-    // useEffect(() => {
-    // const token = localStorage.getItem("token")
-
-    // fetch(`http://localhost:3006/api/current-user`, {
-    //     method: "GET",
-    //     headers: {
-    //         "Authorization": `Bearer ${token}`
-    //     }
-    // }).then(res => {
-
-    //     res.json()
-    // })
-    //     .then(data => {
-
-
-    //     })
-    // }, [])
-
 
     return (
         <div className="navbar">
@@ -47,7 +29,12 @@ function Navbar({ isLoggedIn, username }) {
             </div>
             <div>
 
-                {isLoggedIn ? (<div>{username}</div>) : (
+                {isLoggedIn ? (
+                    <Link to='/profile'>
+
+                        <div>{username}</div>
+                    </Link>
+                ) : (
                     <Link to='/login'>
 
                         <div>guest</div>
