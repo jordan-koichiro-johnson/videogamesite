@@ -14,14 +14,14 @@ function Home() {
             const json = await data.json()
             let newarray = json.map(el => el.name)
             let urlarray = json.map(el => el.imgUrl)
-            console.log(newarray)
+
             getGames(newarray)
             getURLs(urlarray)
         }
         fetchData().catch(console.error)
 
     }, [])
-    console.log(games)
+
     const navigate = useNavigate();
 
     return (

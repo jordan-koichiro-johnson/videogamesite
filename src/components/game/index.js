@@ -9,7 +9,7 @@ function Game() {
     const [url, getURL] = useState('')
     useEffect(() => {
         const fetchData = async () => {
-            const data = await fetch('https://vgdb.herokuapp.com/api/' + game)
+            const data = await fetch('https://vgdb.herokuapp.com/api/game-profile/' + game)
             const json = await data.json()
             let gameName = json.name
             let gameDes = json.description

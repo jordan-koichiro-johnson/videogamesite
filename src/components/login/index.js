@@ -1,12 +1,18 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { React, useState, useEffect } from "react";
 
-function Login({ user, setUser, pass, setPass }) {
+function Login({ user, setUser, pass, setPass, token, setToken, userId, setUserId, isLoggedIn, setIsLoggedIn }) {
+    const navigate = useNavigate();
+    useEffect(() => {
+        if (isLoggedIn) {
+            navigate("/")
+        }
+    }, [isLoggedIn])
 
     function login(e) {
         e.preventDefault()
-        console.log('logging ing')
-        return fetch(`http://localhost:3006/api/login`, {
+        console.log('logging in')
+        return fetch(`https://vgdb.herokuapp.com/api/login`, {
             method: "POST",
             body: JSON.stringify({
                 username: user,
@@ -15,10 +21,18 @@ function Login({ user, setUser, pass, setPass }) {
             headers: {
                 "Content-Type": "application/json"
             }
-        }).then(res => res.json()).
-            then(data => {
-                console.log(data);
-                localStorage.setItem("token", data.token)
+        }).then(res => res.json())
+            .then(data => {
+                if (data.token) {
+                    setUserId(data.user.id)
+                    setToken(data.token)
+                    setIsLoggedIn(true)
+                    localStorage.setItem("token", data.token)
+                } else {
+                    document.querySelector(".username").classList.add("is-error")
+                    document.querySelector(".password").classList.add("is-error")
+                    document.querySelector(".alert").innerHTML = "Invalid Username or Password"
+                }
             })
     }
     return (
