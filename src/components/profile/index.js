@@ -3,40 +3,45 @@ import './style.css';
 
 
 function Profile({ username, userId }) {
-    const [content, setContent] = useState([])
-    const [games, setGames] = useState([])
-    const [ratings, setRatings] = useState([])
-    const [pics, setPics] = useState([])
 
+    const [game, setGame] = useState([])
     useEffect(() => {
 
-
+        console.log("useEffect")
+        setGame([])
 
         async function fetchingGameName(GameId) {
-            console.log('gamename')
-            const name = await fetch('http://localhost:3006/api/game-id/' + GameId)
-            const data = await name.json()
-            console.log(data)
+            console.log("gamename")
 
-            setGames(games => [...games, data.name])
-            setPics(pics => [...pics, data.imgUrl])
+            const name = await fetch('https://vgdb.herokuapp.com/api/game-id/' + GameId)
+            const data = await name.json()
+
+            return data
+
         }
 
         async function fetchingData() {
-
-            const rates = await fetch('http://localhost:3006/api/ratings-for-user', {
+            console.log('fetchrates')
+            const rates = await fetch('https://vgdb.herokuapp.com/api/ratings-for-user', {
                 method: "GET",
                 headers: {
                     "User": userId
                 }
             })
+
             const data = await rates.json()
+
             await data.map(async el => {
-                console.log(el)
-                setContent(content => [...content, el.content])
-                console.log(ratings)
-                setRatings(ratings => [...ratings, el.ratingNum])
-                fetchingGameName(el.GameId)
+
+
+                const gameDate = await fetchingGameName(el.GameId)
+                const gameObj = {
+                    content: el.content,
+                    rating: el.ratingNum,
+                    name: gameDate.name,
+                    url: gameDate.imgUrl
+                }
+                setGame(game => [...game, gameObj])
             })
 
         }
@@ -45,24 +50,24 @@ function Profile({ username, userId }) {
 
     }, [])
 
-    console.log(games)
+
 
 
     return (
         <div>
             {username}
             <div>reviews:</div>
-            {content.map(function (content, index) {
+            {game.map(function (el, index) {
                 return (<div className='reviews'>
                     <div>
-                        <img src={pics[index]} alt={games[index]} />
-                        {games[index]}
+                        <img src={el.url} alt={el.name} />
+                        {el.name}
                     </div>
                     <div>
-                        {content}
+                        {el.content}
                     </div>
                     <div>
-                        {ratings[index]}
+                        {el.rating}
                     </div>
                 </div>)
             })}

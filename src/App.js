@@ -46,6 +46,7 @@ function App() {
   }, [])
 
 
+
   return (
     <div className="App">
       <Router basename='/'>
@@ -54,12 +55,13 @@ function App() {
 
         <Routes>
           <Route path='/' element={<Home />} />
-          <Route path='/:game' element={<Game />} />
+          <Route path='/:game' element={<Game userId={userId} />} />
           <Route path='/login' element={<Login user={user} setUser={setUser} pass={pass} setPass={setPass} token={token} setToken={setToken} username={username} setUserId={setUserId} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
           <Route path='/profile' element={<Profile username={username} userId={userId} />} />
         </Routes>
 
       </Router>
+
     </div>
   );
 }
